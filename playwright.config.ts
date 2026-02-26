@@ -1,6 +1,11 @@
 import { defineConfig } from '@playwright/test';
 import dotenv from 'dotenv';
+import path from 'path';
 
+const env = process.env.ENV;
+if (env) {
+  dotenv.config({ path: path.resolve(__dirname, `.env.${env}`) });
+}
 dotenv.config();
 
 export default defineConfig({

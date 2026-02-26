@@ -6,10 +6,20 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
 
 jobs:
   api-tests:
-    name: Run API Tests
+    name: Run API Tests (${{ github.event.inputs.environment || 'dev' }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -32,14 +42,15 @@ jobs:
       - name: Run API tests
         run: npx playwright test
         env:
-          REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+          ENV: ${{ github.event.inputs.environment || 'dev' }}
+          REQRES_API_KEY: ${{ secrets[format('REQRES_API_KEY_{0}', github.event.inputs.environment || 'dev')] || secrets.REQRES_API_KEY }}
           BASE_URL: https://reqres.in/api/test-suite/collections/users
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-api-report
+          name: playwright-api-report-${{ github.event.inputs.environment || 'dev' }}
           path: playwright-report/
           retention-days: 30
 
@@ -47,6 +58,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-logs
+          name: test-logs-${{ github.event.inputs.environment || 'dev' }}
           path: logs/
           retention-days: 14

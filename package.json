@@ -4,6 +4,9 @@
   "description": "API Test Automation Framework using Playwright + TypeScript for Reqres API",
   "scripts": {
     "test": "npx playwright test",
+    "test:dev": "ENV=dev npx playwright test",
+    "test:qa": "ENV=qa npx playwright test",
+    "test:prod": "ENV=prod npx playwright test",
     "test:users": "npx playwright test tests/users/",
     "test:e2e": "npx playwright test tests/e2e/",
     "test:report": "npx playwright show-report",

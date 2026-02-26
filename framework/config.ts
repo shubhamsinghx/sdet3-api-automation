@@ -1,5 +1,13 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
+const env = process.env.ENV;
+
+if (env) {
+  // Load environment-specific file when ENV is explicitly set
+  dotenv.config({ path: path.resolve(__dirname, '..', `.env.${env}`) });
+}
+// Fall back to .env for any missing vars
 dotenv.config();
 
 export const config = {

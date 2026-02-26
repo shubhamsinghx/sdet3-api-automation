@@ -3,6 +3,9 @@ node_modules/
 
 # Environment
 .env
+.env.dev
+.env.qa
+.env.prod
 
 # Build output
 dist/
