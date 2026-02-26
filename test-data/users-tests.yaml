@@ -1,0 +1,72 @@
+testSuite: "Reqres Users API"
+baseEndpoint: "/records"
+
+testCases:
+  - name: "List all users"
+    method: GET
+    endpoint: "/records"
+    expectedStatus: 200
+    assertions:
+      - field: "data"
+        operator: type
+        value: "object"
+      - field: "page"
+        operator: equals
+        value: 1
+      - field: "per_page"
+        operator: equals
+        value: 20
+
+  - name: "Create a new user"
+    method: POST
+    endpoint: "/records"
+    body:
+      name: "Data Driven User"
+      email: "datadriven@example.com"
+      role: "qa-engineer"
+    expectedStatus: 201
+    assertions:
+      - field: "id"
+        operator: exists
+      - field: "name"
+        operator: equals
+        value: "Data Driven User"
+      - field: "email"
+        operator: equals
+        value: "datadriven@example.com"
+      - field: "role"
+        operator: equals
+        value: "qa-engineer"
+      - field: "createdAt"
+        operator: exists
+
+  - name: "Create user with minimal fields"
+    method: POST
+    endpoint: "/records"
+    body:
+      name: "Minimal User"
+      email: "minimal@example.com"
+    expectedStatus: 201
+    assertions:
+      - field: "id"
+        operator: exists
+      - field: "name"
+        operator: equals
+        value: "Minimal User"
+      - field: "email"
+        operator: equals
+        value: "minimal@example.com"
+      - field: "createdAt"
+        operator: exists
+
+  - name: "Get non-existent user returns 404"
+    method: GET
+    endpoint: "/records/rec_nonexistent999"
+    expectedStatus: 404
+    assertions: []
+
+  - name: "Delete non-existent user returns 404"
+    method: DELETE
+    endpoint: "/records/rec_nonexistent999"
+    expectedStatus: 404
+    assertions: []

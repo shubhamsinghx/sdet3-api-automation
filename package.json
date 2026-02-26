@@ -1,0 +1,29 @@
+{
+  "name": "sdet3-api-automation",
+  "version": "1.0.0",
+  "description": "API Test Automation Framework using Playwright + TypeScript for Reqres API",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:users": "npx playwright test tests/users/",
+    "test:e2e": "npx playwright test tests/e2e/",
+    "test:report": "npx playwright show-report",
+    "lint": "npx tsc --noEmit"
+  },
+  "keywords": [
+    "api-testing",
+    "playwright",
+    "typescript",
+    "reqres",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.3.1",
+    "dotenv": "^16.4.7",
+    "js-yaml": "^4.1.0",
+    "typescript": "^5.7.0"
+  }
+}
